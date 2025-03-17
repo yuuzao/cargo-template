@@ -1,0 +1,7 @@
+services:
+  {{project-name}}:
+    image: registry.rwx.cat/{{project-name}}:latest
+    container_name: {{project-name}}
+    ports:
+      - "{{default_port}}:{{default_port}}"
+    restart: always

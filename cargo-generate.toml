@@ -1,0 +1,11 @@
+[template]
+cargo_generate_version = ">=0.10.0"
+
+[placeholders]
+project_description = { type = "string", prompt = "项目描述", default = "一个Rust Web服务模板" }
+default_port = { type = "string", prompt = "默认端口", default = "12345" }
+default_host = { type = "string", prompt = "默认主机地址", default = "0.0.0.0" }
+default_hello = { type = "string", prompt = "默认问候语", default = "hello" }
+
+[hooks]
+post_gen = ["cargo fmt"]

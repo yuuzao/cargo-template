@@ -20,7 +20,7 @@ pub struct Server {
 pub static CONFIG: Lazy<Settings> = Lazy::new(|| {
     let config = Config::builder()
         .add_source(File::with_name("config.toml"))
-        .add_source(Environment::default().prefix("APP")) // 优先级：env > config.toml
+        .add_source(Environment::default().prefix("APP").separator("_")) // 优先级：env > config.toml, 嵌套结构体中环境变量：APP_SERVER_PORT
         .build()
         .unwrap();
     config.try_deserialize::<Settings>().unwrap()

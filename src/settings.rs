@@ -1,4 +1,4 @@
-use config::{Config, File};
+use config::{Config, File, Environment};
 use log::{LevelFilter, info};
 use once_cell::sync::Lazy;
 use owo_colors::OwoColorize;
@@ -8,14 +8,8 @@ use std::io::Write;
 #[derive(Debug, Clone, Deserialize)]
 pub struct Settings {
     pub server: Server,
-    #[serde(default = "default_hello")]
     pub hello: String,
 }
-
-fn default_hello() -> String {
-    std::env::var("HELLO").unwrap_or("{{default_hello}}".to_string())
-}
-
 #[derive(Debug, Clone, Deserialize)]
 pub struct Server {
     pub port: u16,
@@ -26,6 +20,7 @@ pub struct Server {
 pub static CONFIG: Lazy<Settings> = Lazy::new(|| {
     let config = Config::builder()
         .add_source(File::with_name("config.toml"))
+        .add_source(Environment::default().prefix("APP")) // 优先级：env > config.toml
         .build()
         .unwrap();
     config.try_deserialize::<Settings>().unwrap()

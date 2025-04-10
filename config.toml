@@ -1,3 +1,6 @@
 [server]
 host = "{{default_host}}"
 port = {{default_port}}
+
+[hello]
+value = "world"

@@ -8,7 +8,7 @@ use std::io::Write;
 #[derive(Debug, Clone, Deserialize)]
 pub struct Settings {
     pub server: Server,
-    pub hello: String,
+    pub hello: Hello,
 }
 #[derive(Debug, Clone, Deserialize)]
 pub struct Server {
@@ -16,11 +16,16 @@ pub struct Server {
     pub host: String,
 }
 
+#[derive(Debug, Clone, Deserialize)]
+pub struct Hello {
+    pub value: String,
+}
+
 // using config to load config.toml to static
 pub static CONFIG: Lazy<Settings> = Lazy::new(|| {
     let config = Config::builder()
         .add_source(File::with_name("config.toml"))
-        .add_source(Environment::default().prefix("APP").separator("_")) // 优先级：env > config.toml, 嵌套结构体中环境变量：APP_SERVER_PORT
+        .add_source(Environment::default().separator("__")) // 优先级：env > config.toml, 嵌套结构体中环境变量：APP_SERVER_PORT
         .build()
         .unwrap();
     config.try_deserialize::<Settings>().unwrap()

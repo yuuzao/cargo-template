@@ -4,6 +4,7 @@ services:
     container_name: {{project-name}}
     ports:
       - "{{default_port}}:{{default_port}}"
-    restart: always
     environment:
       - RUN_MODE=prod
+    pull_policy: always
+    restart: always

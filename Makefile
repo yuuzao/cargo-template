@@ -2,7 +2,7 @@
 # 使用git commit id作为tag
 TAG := $(shell git rev-parse --short HEAD)
 
-all: build tag push
+all: build tag push compose
 
 build:
     #如果docker images中tag存在，则跳过
@@ -21,4 +21,4 @@ push: tag
 	docker push registry.rwx.cat/{{project-name}}:latest
 
 compose:
-	curl -X POST http://192.168.6.247:18080/compose/up -F "compose_name={{project-name}}" -F "data=@docker-compose.yml"
+	curl -X POST http://192.168.6.247:18080/compose/up -F "compose_name={{project-name}}" -F "data=@docker-compose.yaml"

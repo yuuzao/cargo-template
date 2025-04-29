@@ -2,7 +2,7 @@ use crate::settings::CONFIG;
 use anyhow::Result;
 use axum::{
     Router,
-    extract::Multipart,
+    extract::{Multipart, DefaultBodyLimit},
     response::Json,
     routing::{get, post},
 };
@@ -25,6 +25,8 @@ impl Server {
         let app = Router::new()
             .route("/", get(index))
             .route("/upload", post(upload));
+
+        let app = app.layer(DefaultBodyLimit::disable());
 
         info!("Server started on {}", format!("{}:{}", host, port));
         axum::serve(listener, app.into_make_service())

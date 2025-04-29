@@ -5,3 +5,5 @@ services:
     ports:
       - "{{default_port}}:{{default_port}}"
     restart: always
+    environment:
+      - RUN_MODE=prod

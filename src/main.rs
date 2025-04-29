@@ -1,5 +1,5 @@
-use {{crate_name}}::server::Server;
-use {{crate_name}}::settings::Initializer;
+use {{project_name}}::server::Server;
+use {{project_name}}::settings::Initializer;
 
 #[tokio::main]
 async fn main() {

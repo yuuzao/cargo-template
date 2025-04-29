@@ -23,6 +23,12 @@ pub struct Hello {
 
 // using config to load config.toml to static
 pub static CONFIG: Lazy<Settings> = Lazy::new(|| {
+    let run_mode = std::env::var("RUN_MODE").unwrap_or_else(|_| "dev".to_string());
+    if run_mode == "dev" {
+        dotenv::from_filename(".env.dev").ok();
+    } else if run_mode == "prod" {
+        dotenv::from_filename(".env").ok();
+    }
     let config = Config::builder()
         .add_source(File::with_name("config.toml"))
         .add_source(Environment::default().separator("__")) // 优先级：env > config.toml, 嵌套结构体中环境变量：APP_SERVER_PORT
